@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GPA Calculator</title>
+<link rel="stylesheet" href="Gpa.css">
+    <script>
+        var rowCount = 1;
+
+        function addRow() {
+            var table = document.getElementById("gradesTable");
+            var newRow = table.insertRow(table.rows.length);
+
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+
+            rowCount++;
+
+            cell1.innerHTML = '<input type="text" value="Enter Subject" name="course_' + rowCount + '">';
+            cell2.innerHTML = '<input type="number" value="Enter credits" name="credit_' + rowCount + '">';
+            cell3.innerHTML = '<input type="text" value="Enter Grades" name="grade_' + rowCount + '">';
+            cell4.innerHTML = '<input type="button" value="REMOVE" onclick="removeRow(this)">';
+        }
+
+        function removeRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            rowCount--;
+            updateElementNames();
+        }
+
+        function updateElementNames() {
+            var table = document.getElementById("gradesTable");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 1; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName("td");
+
+                cells[0].getElementsByTagName("input")[0].name = "course_" + (i + 1);
+                cells[1].getElementsByTagName("input")[0].name = "credit_" + (i + 1);
+                cells[2].getElementsByTagName("input")[0].name = "grade_" + (i + 1);
+            }
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <form action="Calculate_GPA.php" method="post">
+            <table id="gradesTable">
+                <tr>
+                    <td>
+                        <input type="text" value="Enter Subject" name="course_1">
+                    </td>
+                    <td>
+                        <input type="number" value="Enter credits" name="credit_1">
+                    </td>
+                    <td>
+                        <input type="text" value="Enter Grades" name="grade_1">
+                    </td>
+                        <input type="button" value="REMOVE" onclick="removeRow(this)" style="display:none;">
+                    </td>
+                </tr>
+            </table>
+            <input type="button" value="ADD MORE" onclick="addRow()">
+            <input type="submit" style="width: 50%;" value="Calculate GPA">
+        </form>
+    </center>
+
+</body>
+</html>
